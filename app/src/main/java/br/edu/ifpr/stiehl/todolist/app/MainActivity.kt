@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifpr.stiehl.todolist.R
+import br.edu.ifpr.stiehl.todolist.entidades.Article
 import br.edu.ifpr.stiehl.todolist.entidades.NewsResult
 import br.edu.ifpr.stiehl.todolist.servicos.ResultsService
 import br.edu.ifpr.stiehl.todolist.ui.ResultAdapter
@@ -35,26 +36,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun carregaDados() {
-        service.news("br", "5bf5c78e95d84b0387036b52fcaa02f2", "esportes").enqueue(object : Callback<List<NewsResult>> {
-            override fun onFailure(call: Call<List<NewsResult>>, t: Throwable) {
+        service.news("br", "5bf5c78e95d84b0387036b52fcaa02f2", "").enqueue(object : Callback<NewsResult> {
+            override fun onFailure(call: Call<NewsResult>, t: Throwable) {
             }
 
             override fun onResponse(
-                call: Call<List<NewsResult>>,
-                response: Response<List<NewsResult>>
+                call: Call<NewsResult>,
+                response: Response<NewsResult>
             ) {
                 val results = response.body()
                 if (results != null)
-                    configuraRecyclerView(results)
+                    configuraRecyclerView(results?.articles)
             }
         })
     }
 
-    fun configuraRecyclerView(results: List<NewsResult>) {
-        adapter = ResultAdapter(results.toMutableList())
+    fun configuraRecyclerView(results: List<Article>) {
+        adapter = ResultAdapter(results)
         listTarefas.adapter = adapter
 
         listTarefas.layoutManager = LinearLayoutManager(
-            this, RecyclerView.VERTICAL, false)
+            this, RecyclerView.VERTICAL, false
+        )
     }
 }

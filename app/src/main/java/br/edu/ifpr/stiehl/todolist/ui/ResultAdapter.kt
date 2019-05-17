@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifpr.stiehl.todolist.R
+import br.edu.ifpr.stiehl.todolist.entidades.Article
 import br.edu.ifpr.stiehl.todolist.entidades.NewsResult
 import kotlinx.android.synthetic.main.item_article.view.*
 
-class ResultAdapter(private var newsResults: MutableList<NewsResult>) :
+class ResultAdapter(private var articles: List<Article>) :
     RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
 
@@ -21,15 +22,15 @@ class ResultAdapter(private var newsResults: MutableList<NewsResult>) :
                 .inflate(viewType, parent, false)
         )
 
-    override fun getItemCount() = newsResults.size
+    override fun getItemCount() = articles.size
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) =
-        holder.preencherView(newsResults[position])
+        holder.preencherView(articles[position])
 
     inner class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun preencherView(newsResult: NewsResult) {
-            itemView.txtTitulo.setText(newsResult.status.toString())
-            itemView.txtDescricao.setText(newsResult.totalResults.toString())
+        fun preencherView(article:Article) {
+            itemView.txtTitulo.setText(article.content)
+            itemView.txtDescricao.setText(article.title)
         }
     }
 

@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface ResultsService {
     @Headers("Accept: application/json")
-    @GET("top-headlines?")
+    @GET("top-headlines")
     fun news(
         @Query("country")
         country:String,
@@ -14,5 +14,5 @@ interface ResultsService {
         apiKey:String,
         @Query("q")
         q:String
-    ):Call<List<NewsResult>>
+    ):Call<NewsResult>
 }
