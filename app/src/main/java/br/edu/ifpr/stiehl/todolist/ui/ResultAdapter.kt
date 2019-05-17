@@ -1,0 +1,36 @@
+package br.edu.ifpr.stiehl.todolist.ui
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import br.edu.ifpr.stiehl.todolist.R
+import br.edu.ifpr.stiehl.todolist.entidades.NewsResult
+import kotlinx.android.synthetic.main.item_article.view.*
+
+class ResultAdapter(private var newsResults: MutableList<NewsResult>) :
+    RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
+
+
+    override fun getItemViewType(position: Int) = R.layout.item_article
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ResultViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(viewType, parent, false)
+        )
+
+    override fun getItemCount() = newsResults.size
+
+    override fun onBindViewHolder(holder: ResultViewHolder, position: Int) =
+        holder.preencherView(newsResults[position])
+
+    inner class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun preencherView(newsResult: NewsResult) {
+            itemView.txtTitulo.setText(newsResult.status.toString())
+            itemView.txtDescricao.setText(newsResult.totalResults.toString())
+        }
+    }
+
+}
